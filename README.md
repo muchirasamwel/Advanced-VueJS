@@ -9,6 +9,10 @@ npm install
 ```
 npm run serve
 ```
+### Start Node server at nodejs for API
+```
+node api.js
+```
 
 ### Compiles and minifies for production
 ```

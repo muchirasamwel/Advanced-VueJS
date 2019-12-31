@@ -2,7 +2,8 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/accounts">Add Account</router-link>|
+      <router-link to="/login">Login</router-link>
     </div>
     <router-view />
   </div>
@@ -16,10 +17,8 @@
   text-align: center;
   color: #2c3e50;
 }
-
 #nav {
   padding: 30px;
-
   a {
     font-weight: bold;
     color: #2c3e50;
@@ -30,3 +29,20 @@
   }
 }
 </style>
+<script>
+  // import Vuex from "vuex";
+  // import Vue from "vue";
+  // Vue.use(Vuex);
+  // const store = new Vuex.Store({
+  //   state: {
+  //     count: 0
+  //   },
+  //   mutations: {
+  //     increment: state => state.count++,
+  //     decrement: state => state.count--
+  //   }
+  // });
+  export default {
+
+  }
+</script>
