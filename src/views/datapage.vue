@@ -74,7 +74,7 @@
         this.idname = val + ' ' + this.name
       },
       name: function (val) {
-        this.fullName = this.id + ' ' + val
+        this.idname = this.id + ' ' + val
       }
     },
     computed: {
