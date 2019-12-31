@@ -63,7 +63,18 @@
   export default {
     data:function(){
       return{
-        fdata:{}
+        fdata:{},
+        idname:'',
+        id:'',
+        name:''
+      }
+    },
+    watch: {
+      id : function (val) {
+        this.idname = val + ' ' + this.name
+      },
+      name: function (val) {
+        this.fullName = this.id + ' ' + val
       }
     },
     computed: {
