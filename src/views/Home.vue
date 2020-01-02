@@ -2,7 +2,7 @@
     <div class="home">
         <img id="mylogo" alt="Vue logo" src="../assets/smb.webp" width="300px"/>
         <div class="container">
-            <div class="mcard" v-for="account in accounts" :key="account">
+            <div class="mcard" v-for="account in accounts" :key="account.id">
                 <div class="chead"><span>{{account.id}}</span>{{account.department}}</div>
                 <div>
                     <p>{{account.accountno}}</p>
@@ -10,11 +10,11 @@
                 </div>
             </div>
         </div>
-        <ul v-if="errors && errors.length">
-            <li v-for="error in errors" :key="error">
-                {{error.message}}
-            </li>
-        </ul>
+<!--        <ul v-if="errors && errors.length">-->
+<!--            <li v-for="error in errors" :key="error">-->
+<!--                {{error.message}}-->
+<!--            </li>-->
+<!--        </ul>-->
     </div>
 </template>
 <style lang="scss">
@@ -79,30 +79,27 @@
 <script>
     import axios from 'axios';
     import vuex from 'vuex';
-
     export default {
         name: "home",
         components: {},
+        acc:[],
         data() {
             return {
-                accounts: [],
-                errors: []
+
             }
         },
         created() {
-            axios.get(`http://127.0.0.1:8000/smb_api/accounts`)
-                .then(response => {
-                    let resp = response.data;
-                    if (resp === "Auth FAiled") {
-                        this.accounts = [];
-                    } else {
-                        //console.log('auth success');
-                        this.accounts = resp;
-                    }
-                })
-                .catch(e => {
-                    this.errors.push(e)
-                })
+            this.$store.dispatch('fetchData');
+        },
+        computed: {
+            accounts: {
+                get() {
+                    let acc = this.$store.state.accounts;
+                    // console.log('getting '+pass)
+                    return acc;
+                }
+
+            }
         }
     };
 </script>

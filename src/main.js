@@ -10,13 +10,18 @@ const store = new Vuex.Store({
     state: {
         count: 0,
         username: "",
-        password: ""
+        password: "",
+        apiKey:"",
+        accounts:[]
     },
     mutations: {
         increment: state => state.count++,
         decrement: state => state.count--,
         setPassword: (state, newValue) => {
             state.password = newValue
+        },
+        setApi: (state, newValue) => {
+            state.apiKey = newValue
         },
         setUsername: (state, newValue) => {
             state.username = newValue
@@ -43,15 +48,43 @@ const store = new Vuex.Store({
                 })
             })
         },
-        // login: function (state) {
-        //     console.log(state.state.password);
-        //     if (state.state.password == "sam" && state.state.username == "sam") {
-        //         alert("login success");
-        //         return 'success';
-        //     } else {
-        //         alert("login Failed");
-        //     }
-        // },
+        fetchData({commit,state}){
+            axios.get(`http://127.0.0.1:8000/smb_api/accounts`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'access-token': state.apiKey},
+                })
+                .then(response => {
+                    let resp = response.data;
+                    console.log(resp);
+                    if (resp === "Failed to authenticate token."||resp === 'No token Provided') {
+                        state.accounts = [];
+                    } else {
+                        //console.log('auth success');
+                        state.accounts = resp;
+                    }
+                })
+                .catch(e => {
+                    console.log(e);
+                })
+        },
+        pushData({commit,state},data){
+            alert('Data pushed');
+            console.log( state.apiKey);
+            axios.post('http://127.0.0.1:8000/smb_api/accounts/add',
+                data,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'access-token': state.apiKey
+                    }
+                }
+            ).then(result => {
+                commit('increment');
+                console.log(result.data);
+            });
+        },
         setPassword: ({commit, state}, newValue) => {
             commit('setPassword', newValue)
             return state.password

@@ -25,10 +25,12 @@
                     , password: this.$store.state.password
                 });
                 console.log(results);
-                if (results.data === "success") {
-                    await alert("Login Success");
+                if (results.data.indexOf('error')<0) {
+                   await this.$store.commit('setApi', results.data);
+                    await alert("Login Success \n Your API Key = "+this.$store.state.apiKey);
                     this.$router.push('/');
                 } else {
+                    await this.$store.commit('setApi',"");
                     alert("API AUTH REJECTED")
                 }
             }
